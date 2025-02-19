@@ -166,8 +166,7 @@ public class BaseTest extends GetWebDriver{
     @AfterSuite
     public void Close_browser() throws InterruptedException, IOException {
         if (BaseTestDriver!=null){
-            BaseTestDriver.findElement(By.xpath("//a[@href='/Admin/Dashboard']")).click();
-            BaseTestDriver.findElement(By.xpath("//a[@href='/Account/LogOut']")).click();
+       
             BaseTestDriver.quit();
             log.info("Browser instance closed");
         }
