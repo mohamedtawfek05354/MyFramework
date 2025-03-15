@@ -126,7 +126,30 @@ public class jsonFileManager {
             return null;
         }
     }
-
+    /**
+     * Retrieves all keys from the JSON data by KeyPrefix
+     * @param keyPrefix .
+     *
+     * @return a list of all keys, or null if the data is empty.
+     */
+    public List <String> getKeys (String keyPrefix) {
+        List<String> keys = new ArrayList<>();
+        if (keyPrefix == null || keyPrefix.isEmpty()) {
+            log.warn("The provided keyPrefix is null or empty.");
+            return null;
+        }
+        for (String key : data.keySet()) {
+            if (key.toLowerCase().replaceAll("\\s+", "").contains(keyPrefix.toLowerCase().replaceAll("\\s+", ""))) {
+                keys.add(key);}
+        }
+        if (!keys.isEmpty()) {
+            log.info("The list of keys containing {} are/is retrieved: {} " ,keyPrefix ,keys);
+            return keys;
+        } else {
+            log.info("The key prefix entered doesn't match any keys in the JSON: {}" ,keyPrefix);
+            return null;
+        }
+    }
     /**
      * Retrieves all keys from the JSON data.
      *
@@ -143,7 +166,47 @@ public class jsonFileManager {
         }
         return null;
     }
-
+    /**
+     * Retrieves all Values from the JSON data by valuePrefix.
+     * @param valuePrefix .
+     * @return a list of all Values, or null if the data is empty.
+     */
+    public List <Object> getValues(String valuePrefix) {
+        List<Object> values = new ArrayList<>();
+        if (valuePrefix == null || valuePrefix.isEmpty()) {
+            log.warn("The provided valuePrefix is null or empty.");
+            return null;
+        }
+        for (Object value : data.values()) {
+            if (value != null && value.toString().toLowerCase().replaceAll("\\s+", "")
+                    .contains(valuePrefix.toLowerCase().replaceAll("\\s+", ""))) {
+                values.add(value);
+            }
+        }
+        if (!values.isEmpty()) {
+            log.info("The list of values containing '{}' are retrieved: {}", valuePrefix, values);
+            return values;
+        } else {
+            log.info("The value prefix entered doesn't match any values in the JSON: {}", valuePrefix);
+            return null;
+        }
+    }
+    /**
+     * Retrieves all Values from the JSON data.
+     *
+     * @return a list of all Values, or null if the data is empty.
+     */
+    public List <Object> getValues () {
+        if ( data!=null ) {
+            List<Object> values = new ArrayList<>(data.values());
+            log.info("The list of values are/is retrieved: {} ", values);
+            return values;
+        }
+        else {
+            log.error("The json file don't contain any values {}",data);
+        }
+        return null;
+    }
     /**
      * Initializes the JSON data structure and defines its type.
      */
