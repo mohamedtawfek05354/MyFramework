@@ -19,7 +19,12 @@ public class jsonFileManager {
     private Type type ;
     private static final Logger log = LogManager.getLogger(lookup().lookupClass());
 
-    public  jsonFileManager (String jsonPath) {
+    /**
+     * Initializes the JSON file manager and loads data from the specified JSON file.
+     *
+     * @param jsonPath the path to the JSON file.
+     */
+    public jsonFileManager (String jsonPath) {
         initialization();
         if (jsonPath == null || jsonPath.isEmpty()){
             log.warn("The json path is empty, please provide the path");
@@ -29,10 +34,15 @@ public class jsonFileManager {
         }
         catch (Exception e)
         {log.warn("The data is empty as the json file is wrong/not provided {}",data );}
-
     }
 
-    protected static Object getValueByKey(String key) {
+    /**
+     * Retrieves the value associated with the specified key from the JSON data.
+     *
+     * @param key the key to search for.
+     * @return the corresponding value, or null if the key is not found.
+     */
+    public Object getValueByKey(String key) {
         try {
             if (data.containsKey(key)) {
                 log.info("Sent key is existing in the json: '{}'", key);
@@ -47,7 +57,14 @@ public class jsonFileManager {
         }
         return null;
     }
-    protected static LinkedHashMap<String, Object> getKeyAndValueByKey(String key) {
+
+    /**
+     * Retrieves the value if it's map ,so it will be key and value as a LinkedHashMap.
+     *
+     * @param key the key to search for.
+     * @return a LinkedHashMap containing the key-value pair, or null if the key is not found.
+     */
+    public LinkedHashMap<String, Object> getKeyAndValueByKey(String key) {
         if (key == null || key.isEmpty()) {
             log.warn("The provided key is null or empty.");
             return null;
@@ -79,17 +96,23 @@ public class jsonFileManager {
         }
         return null;
     }
-    protected static List <String> getValueListByKey(String key) {
+
+    /**
+     * Retrieves a list of values associated with the specified key if it maps to a list.
+     *
+     * @param key the key to search for.
+     * @return a list of values, or null if the key does not exist or is not a list.
+     */
+    public List<String> getValueListByKey(String key) {
         if (key == null || key.isEmpty()) {
             log.error("The provided key is null or empty.");
             return null;
         }
-
         if (data.containsKey(key)) {
             log.info("Sent key is existing in the json: {}", key);
             Object value = data.get(key);
             try {
-                List <String> valueList = (List) value;
+                List<String> valueList = (List) value;
                 log.info("The list of {} are/is retrieved: {}", key, value);
                 return valueList;
             }
@@ -103,74 +126,29 @@ public class jsonFileManager {
             return null;
         }
     }
-    protected static List <String> getKeys (String keyPrefix) {
-        List<String> keys = new ArrayList<>();
-        if (keyPrefix == null || keyPrefix.isEmpty()) {
-            log.warn("The provided keyPrefix is null or empty.");
-            return null;
-        }
-        for (String key : data.keySet()) {
-            if (key.toLowerCase().replaceAll("\\s+", "").contains(keyPrefix.toLowerCase().replaceAll("\\s+", ""))) {
-                keys.add(key);}
-        }
-        if (!keys.isEmpty()) {
-            log.info("The list of keys containing {} are/is retrieved: {} " ,keyPrefix ,keys);
-            return keys;
-        } else {
-            log.info("The key prefix entered doesn't match any keys in the JSON: {}" ,keyPrefix);
-            return null;
-        }
-    }
-    protected static List <String> getKeys () {
+
+    /**
+     * Retrieves all keys from the JSON data.
+     *
+     * @return a list of all keys, or null if the data is empty.
+     */
+    public List<String> getKeys() {
         if (!data.isEmpty()) {
             List<String> keys = new ArrayList<>(data.keySet());
             log.info("The list of keys are/is retrieved: {} ", keys);
             return keys;
         }
         else {
-            log.error("The json file don't contain any keys {}",data);
+            log.error("The json file don't contain any keys {}", data);
         }
+        return null;
+    }
 
-        return null;
-    }
-    protected static List <Object> getValues(String valuePrefix) {
-        List<Object> values = new ArrayList<>();
-        if (valuePrefix == null || valuePrefix.isEmpty()) {
-            log.warn("The provided valuePrefix is null or empty.");
-            return null;
-        }
-        for (Object value : data.values()) {
-            if (value != null && value.toString().toLowerCase().replaceAll("\\s+", "")
-                    .contains(valuePrefix.toLowerCase().replaceAll("\\s+", ""))) {
-                values.add(value);
-            }
-        }
-        if (!values.isEmpty()) {
-            log.info("The list of values containing '{}' are retrieved: {}", valuePrefix, values);
-            return values;
-        } else {
-            log.info("The value prefix entered doesn't match any values in the JSON: {}", valuePrefix);
-            return null;
-        }
-    }
-    protected static List <Object> getValues () {
-        if ( data!=null ) {
-            List<Object> values = new ArrayList<>(data.values());
-            log.info("The list of values are/is retrieved: {} ", values);
-            return values;
-        }
-        else {
-            log.error("The json file don't contain any values {}",data);
-        }
-        return null;
-    }
-    protected void initialization() {
+    /**
+     * Initializes the JSON data structure and defines its type.
+     */
+    public void initialization() {
         data = null;
         type = new TypeToken<LinkedHashMap<String, Object>>() {}.getType();
     }
-
-
-
-
-
 }

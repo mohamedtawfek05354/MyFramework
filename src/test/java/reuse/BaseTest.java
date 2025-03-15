@@ -8,7 +8,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -58,70 +57,8 @@ public class BaseTest extends GetWebDriver{
     public static String url;
     public static String mode;
 
-    //-----------------------------------------------------------------------------------------------------------------------------------------//
-    @BeforeSuite
-    public void SetUp() throws IOException {
-        // enter file path to delete it from downloads section
-        Clear_Downloads("file");
-        log.info("Starting test Setup execution");
-        ConfigLoader configLoader = new ConfigLoader("./src/main/resources/config.properties");
-        ConfigLoader DBConfig = new ConfigLoader("./src/main/resources/DB.properties");
-        Config_From=DBConfig.getProperty("Config_From");
-        Config_To=DBConfig.getProperty("Config_To");
-        Config_DB_Name=DBConfig.getProperty("DB_Name");
-        Config_Pass_SQL=DBConfig.getProperty("Pass_SQL");
-        Config_UserName_SQL=DBConfig.getProperty("UserName_SQL");
-        Config_SQL_IP_portal=DBConfig.getProperty("SQL_IP_portal");
-        Config_URL_MySQL=DBConfig.getProperty("URL_MySQL");
-        Config_Pass_MySQL=DBConfig.getProperty("Pass_MySQL");
-        Config_UserName_MySQL=DBConfig.getProperty("UserName_MySQL");
-        Config_MySQL_Name=DBConfig.getProperty("MySQL_Name");
-        IDFrom = System.getProperty("IDFrom", Config_From);
-        IDTo = System.getProperty("IDTo", Config_To);
-        browser=configLoader.getProperty("browser");
-        mode=configLoader.getProperty("mode");
-        url=configLoader.getProperty("url");
-        MySQL_Vendor=DBConfig.getProperty("VendorId");
-        DB_Name = System.getProperty("DB_name", Config_DB_Name);
-        SQLIP_portal=System.getProperty("SQLIP_Portal",Config_SQL_IP_portal);
-        UserName_SQL = System.getProperty("SQL_UserName", Config_UserName_SQL);
-        Pass_SQL = System.getProperty("SQL_Pass", Config_Pass_SQL);
-        MYSQL_Name = System.getProperty("MySQL_Name",Config_MySQL_Name);
-        UserName_MySQL = System.getProperty("MySQL_UserName", Config_UserName_MySQL);
-        Pass_MySQL = System.getProperty("MySQL_Pass", Config_Pass_MySQL);
-        URL_MySQL = System.getProperty("MySQL_URL", Config_URL_MySQL);
-
-        System.out.println("DB_Name: " + System.getProperty("DB_name"));
-        System.out.println("SQL_UserName: " + System.getProperty("SQL_UserName"));
-        System.out.println("SQL_Pass: " + System.getProperty("SQL_Pass"));
-        System.out.println("MySQL_Name: " + System.getProperty("MySQL_Name"));
-        System.out.println("MySQL_UserName: " + System.getProperty("MySQL_UserName"));
-        System.out.println("MySQL_Pass: " + System.getProperty("MySQL_Pass"));
-        System.out.println("MySQL_URL: " + System.getProperty("MySQL_URL"));
-        System.out.println("IDFrom: " + System.getProperty("IDFrom"));
-        System.out.println("IDTo: " + System.getProperty("IDTo"));
-
-        // Log each configuration
-        log.info("Database Configurations:");
-        log.info("DB_Name: {}", DB_Name);
-        log.info("UserName_SQL: {}", UserName_SQL);
-        log.info("Pass_SQL: {}", Pass_SQL);
-        log.info("SQLIP_portal : {}",SQLIP_portal);
-        log.info("MYSQL_Name: {}", MYSQL_Name);
-        log.info("UserName_MySQL: {}", UserName_MySQL);
-        log.info("Pass_MySQL: {}", Pass_MySQL);
-        log.info("URL_MySQL: {}", URL_MySQL);
-        log.info("MySQL_Vendor: {}",MySQL_Vendor);
-        log.info("IDFrom: {}", IDFrom);
-        log.info("IDTo: {}", IDTo);
-        log.info("browser: {}",browser);
-        log.info("mode: {}",mode);
-        log.info("url: {}",url);
-
-    }
-
     @Description("Open Browser and LogIn")
-    @BeforeSuite(dependsOnMethods = "SetUp")
+    @BeforeSuite
     public void Open_Browser() throws InterruptedException {
         try {
             BaseTestDriver= launchBrowser(browser,mode);
@@ -164,10 +101,8 @@ public class BaseTest extends GetWebDriver{
 
     @Description("Close the browser")
     @AfterSuite
-    public void Close_browser() throws InterruptedException, IOException {
+    public void Close_browser() {
         if (BaseTestDriver!=null){
-            BaseTestDriver.findElement(By.xpath("//a[@href='/Admin/Dashboard']")).click();
-            BaseTestDriver.findElement(By.xpath("//a[@href='/Account/LogOut']")).click();
             BaseTestDriver.quit();
             log.info("Browser instance closed");
         }

@@ -32,11 +32,6 @@ public class ConfigLoader {
         return properties.getProperty(key);
     }
 
-    public String getValue(String key) {
-        log.info("Fetching value for key: {}", key);
-        return properties.getProperty(key);
-    }
-
     public String[] getArrayValue(String key) {
         log.info("Fetching array value for key: {}", key);
         String value = properties.getProperty(key);

@@ -44,7 +44,6 @@ public class ExcelFileManager {
             log.error("Error loading Excel file: {}", e.getMessage(), e);
         }
     }
-
     /**
      * Retrieves the total number of rows in the Excel sheet.
      *
@@ -66,7 +65,6 @@ public class ExcelFileManager {
         log.info("Total columns: {}", columnCount);
         return columnCount;
     }
-
     /**
      * Retrieves the formula present in a specific cell if available.
      *
@@ -84,7 +82,6 @@ public class ExcelFileManager {
             return "There's No Formula here";
         }
     }
-
     /**
      * Retrieves the data present in a specific cell.
      *
@@ -99,7 +96,6 @@ public class ExcelFileManager {
         log.info("Cell data at row {}, column {}: {}", rowNum, colNum, cellData);
         return cellData;
     }
-
     /**
      * Retrieves all column headers from the first row of the sheet.
      *
@@ -113,7 +109,6 @@ public class ExcelFileManager {
         log.info("Headers retrieved: {}", headers);
         return headers;
     }
-
     /**
      * Retrieves all column data mapped to their respective headers.
      *
@@ -139,7 +134,6 @@ public class ExcelFileManager {
         }
         return columnData;
     }
-
     /**
      * Retrieves all rows of data from the sheet, excluding headers.
      *
@@ -157,7 +151,6 @@ public class ExcelFileManager {
         log.info("Rows retrieved: {}", data.size());
         return data;
     }
-
     /**
      * Closes the Excel file and releases resources.
      */
