@@ -1,6 +1,5 @@
 package WebDriverMangeFactory;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.testng.AllureTestNg;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,15 +15,13 @@ import static java.lang.invoke.MethodHandles.lookup;
 public class GetEdge extends GetWebDriver{
     public static WebDriver setupEdgeDriver(String mode) {
         Logger log = LogManager.getLogger(lookup().lookupClass());
-
-        WebDriverManager.edgedriver().setup();
         EdgeOptions options = new EdgeOptions();
         // Check if the mode contains any supported mode part and apply the corresponding Chrome option
         if (mode != null) {
             for (String supportedMode : MODES) {
                 if (mode.toLowerCase().contains(supportedMode)) {
                     options.addArguments(getArgumentForMode(supportedMode));
-                    log.info("Launching Edge browser with mode: " + supportedMode);
+                    log.info("Launching Edge browser with mode: {}", supportedMode);
                 }
             }
         }else  {
