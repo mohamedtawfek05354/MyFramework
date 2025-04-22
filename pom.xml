@@ -12,21 +12,21 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <seleniumVersion>4.21.0</seleniumVersion>
-        <testNG>7.10.1</testNG>
+        <seleniumVersion>4.27.0</seleniumVersion>
+        <testNG>7.10.2</testNG>
         <SLF4JAPIVersion>2.0.13</SLF4JAPIVersion>
         <SLF4JSimpleVersion>2.0.13</SLF4JSimpleVersion>
         <log4jVersion>2.23.1</log4jVersion>
         <AllureVersion>2.28.0</AllureVersion>
         <Commons>2.16.1</Commons>
         <PDFBOXVersion>2.0.27</PDFBOXVersion>
-        <JSON>20240303</JSON>
         <Recorder>1.5.10</Recorder>
         <CSV>1.11.0</CSV>
         <MySQL>9.1.0</MySQL>
         <POI>5.4.0</POI>
         <SQL>12.8.1.jre11</SQL>
         <Gson>2.11.0</Gson>
+        <Cucumber>7.21.1</Cucumber>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
@@ -47,6 +47,23 @@
             <artifactId>gson</artifactId>
             <version>${Gson}</version>
         </dependency>
+        <!--cucumber-core -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>${Cucumber}</version>
+        </dependency>
+        <!--cucumber-testng -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${Cucumber}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-gherkin</artifactId>
+            <version>${Cucumber}</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -58,12 +75,6 @@
                     <artifactId>commons-io</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>${JSON}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.bytedeco/javacv-platform -->
         <dependency>
